@@ -16,6 +16,8 @@ export default class Node extends Component {
     node: this.props.model
   };
 
+  // TODO work out x from percentage unit in state...
+
   render() {
     console.log("::render::node::");
     console.dir({ node: this.state.node });
