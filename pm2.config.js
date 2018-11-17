@@ -8,11 +8,11 @@ module.exports = {
       args: "one two",
       instances: 1,
       autorestart: true,
-      watch: ["server", "pm2.config.js"],
+      watch: ["server"],
       max_memory_restart: "1G",
       env: {
         NODE_ENV: "development",
-        PORT: 3001
+        PORT: 3000
       },
       env_production: {
         NODE_ENV: "production",

@@ -1,13 +1,21 @@
-import React from "react";
+import Layout from "../components/Layout";
+import Text from "../components/Text";
 
-const Home = () => (
-  <div>
-    <div>
-      <h1>hello world</h1>
-    </div>
+import styled from "styled-components";
 
-    <style jsx>{``}</style>
-  </div>
+const Container = styled.div`
+  margin-top: 1.5rem;
+`;
+
+const Index = props => (
+  <Layout colour="#f9d4bb" columns="1fr" rows="10vh 1fr">
+    <Container>
+      <Text colour="#664e4c" id="title" size="4rem">
+        React Editable Graph
+      </Text>
+    </Container>
+    <div>graph go here</div>
+  </Layout>
 );
 
-export default Home;
+export default Index;
