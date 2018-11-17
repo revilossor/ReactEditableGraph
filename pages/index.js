@@ -15,8 +15,22 @@ const Index = props => (
         Editable Graph
       </Text>
     </Container>
-    <EditableGraph graph="" />
+    <EditableGraph width="100%" height="100%" graph={props.graph} />
   </Layout>
 );
+
+Index.getInitialProps = function() {
+  return {
+    graph: {
+      nodes: [{ id: "1", x: 100, y: 80 }, { id: "2", x: 200, y: 30 }],
+      edges: [
+        {
+          start: { node: "1", port: "out_0", points: [{ x: 100, y: 100 }] },
+          end: { node: "2", port: "in_1", points: [{ x: 100, y: 120 }] }
+        }
+      ]
+    }
+  };
+};
 
 export default Index;

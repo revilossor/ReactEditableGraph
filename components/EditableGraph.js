@@ -1,4 +1,4 @@
-import { Fragment, Component } from "react";
+import { Component } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -19,6 +19,15 @@ export default class EditableGraph extends Component {
   };
 
   render() {
-    return <Container />;
+    console.log("::render::");
+    console.dir({ graph: this.state.graph });
+
+    return (
+      <Container>
+        <svg width={this.props.width} height={this.props.height}>
+          <rect width="100" height="100" fill="#f06" />
+        </svg>
+      </Container>
+    );
   }
 }
