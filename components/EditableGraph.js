@@ -37,10 +37,11 @@ export default class EditableGraph extends Component {
     this.Viewer.changeTool("auto");
   }
 
-  render() {
-    console.log("::render::graph::");
-    console.dir({ graph: this.state.graph });
+  setDragMode(on = true) {
+    this.Viewer.changeTool(on ? "auto" : "none");
+  }
 
+  render() {
     return (
       <Container>
         <ReactSVGPanZoom
@@ -52,14 +53,18 @@ export default class EditableGraph extends Component {
           customMiniature={EmptyComponent}
           customToolbar={EmptyComponent}
           detectAutoPan={false}
-          onClick={event =>
-            console.log("click", event.x, event.y, event.originalEvent)
-          }
+          onMouseUp={e => {
+            this.setDragMode.call(this);
+          }}
         >
           <svg width={this.props.width} height={this.props.height}>
             <g>
               {this.state.graph.nodes.map((node, i) => (
-                <Node model={node} key={i} />
+                <Node
+                  model={node}
+                  key={i}
+                  setDragMode={this.setDragMode.bind(this)}
+                />
               ))}
             </g>
           </svg>

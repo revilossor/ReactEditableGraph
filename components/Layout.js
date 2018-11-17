@@ -8,6 +8,7 @@ import reset from "styled-reset";
 const GlobalStyle = createGlobalStyle`
   ${reset}
   @import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC');
+  rect.node:hover { cursor: move }
 `;
 
 const Stage = styled.div`

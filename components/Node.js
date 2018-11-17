@@ -1,5 +1,4 @@
 import { Component } from "react";
-import styled from "styled-components";
 
 const defaults = {
   width: 100,
@@ -13,15 +12,50 @@ const defaults = {
 
 export default class Node extends Component {
   state = {
-    node: this.props.model
+    node: this.props.model,
+    dragging: false
   };
 
-  // TODO work out x from percentage unit in state...
+  getMousePosition(evt) {
+    var CTM = event.target.getScreenCTM();
+    return {
+      x: (evt.clientX - CTM.e) / CTM.a,
+      y: (evt.clientY - CTM.f) / CTM.d
+    };
+  }
+
+  startDrag(e) {
+    e.preventDefault();
+    this.props.setDragMode.call(null, false);
+    this.setState({ dragging: true });
+  }
+
+  drag(e) {
+    if (this.state.dragging) {
+      e.preventDefault();
+      const coord = this.getMousePosition(e);
+      e.target.setAttributeNS(null, "x", coord.x - 50);
+      e.target.setAttributeNS(null, "y", coord.y - 50);
+    }
+  }
+
+  endDrag(e) {
+    e.preventDefault();
+    this.props.setDragMode.call(null);
+    this.setState({ dragging: false });
+  }
 
   render() {
-    console.log("::render::node::");
-    console.dir({ node: this.state.node });
-
-    return <rect {...defaults} {...this.state.node} />;
+    return (
+      <rect
+        className="node"
+        {...defaults}
+        {...this.state.node}
+        onMouseDown={this.startDrag.bind(this)}
+        onMouseMove={this.drag.bind(this)}
+        onMouseUp={this.endDrag.bind(this)}
+        onMouseLeave={this.endDrag.bind(this)}
+      />
+    );
   }
 }
