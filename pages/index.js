@@ -15,14 +15,14 @@ const Index = props => (
         Editable Graph
       </Text>
     </Container>
-    <EditableGraph width="100%" height="100%" graph={props.graph} />
+    <EditableGraph width="100%" height="100%" model={props.graph} />
   </Layout>
 );
 
 Index.getInitialProps = function() {
   return {
     graph: {
-      nodes: [{ id: "1", x: 100, y: 80 }, { id: "2", x: 200, y: 30 }],
+      nodes: [{ id: "1", x: 100, y: 80 }, { id: "2", x: 400, y: 300 }],
       edges: [
         {
           start: { node: "1", port: "out_0", points: [{ x: 100, y: 100 }] },

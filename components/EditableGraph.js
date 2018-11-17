@@ -1,6 +1,8 @@
 import { Component } from "react";
 import styled from "styled-components";
 
+import Node from "../components/Node";
+
 const Container = styled.div`
   overflow: auto;
   border: 4px solid #664e4c;
@@ -15,17 +17,19 @@ const Container = styled.div`
 
 export default class EditableGraph extends Component {
   state = {
-    graph: this.props.graph
+    graph: this.props.model
   };
 
   render() {
-    console.log("::render::");
+    console.log("::render::graph::");
     console.dir({ graph: this.state.graph });
 
     return (
       <Container>
         <svg width={this.props.width} height={this.props.height}>
-          <rect width="100" height="100" fill="#f06" />
+          {this.state.graph.nodes.map((node, i) => (
+            <Node model={node} key={i} />
+          ))}
         </svg>
       </Container>
     );
