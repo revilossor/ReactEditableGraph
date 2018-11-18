@@ -37,7 +37,7 @@ Index.getInitialProps = function() {
         {
           start: "1_out_0",
           end: "2_in_0",
-          points: [{ x: 5100, y: 5100 }]
+          points: [{ x: 5300, y: 5100 }]
         }
       ]
     }
