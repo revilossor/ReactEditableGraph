@@ -27,7 +27,7 @@ export default class EditableGraph extends Component {
 
   componentDidMount() {
     this.Viewer.changeTool("auto");
-    this.Viewer.pan(-5000, -5000);
+    this.Viewer.pan(-this.props.width / 2, -this.props.height / 2);
   }
 
   getPortPositions() {
