@@ -47,15 +47,18 @@ export default class Node extends Component {
 
   render() {
     return (
-      <rect
-        className="node"
-        {...defaults}
-        {...this.state.node}
-        onMouseDown={this.startDrag.bind(this)}
-        onMouseMove={this.drag.bind(this)}
-        onMouseUp={this.endDrag.bind(this)}
-        onMouseLeave={this.endDrag.bind(this)}
-      />
+      <svg>
+        <rect
+          className="node"
+          {...defaults}
+          x={this.state.node.x + 5000}
+          y={this.state.node.y + 5000}
+          onMouseDown={this.startDrag.bind(this)}
+          onMouseMove={this.drag.bind(this)}
+          onMouseUp={this.endDrag.bind(this)}
+          onMouseLeave={this.endDrag.bind(this)}
+        />
+      </svg>
     );
   }
 }

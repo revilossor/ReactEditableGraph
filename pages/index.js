@@ -15,7 +15,7 @@ const Index = props => (
         Editable Graph
       </Text>
     </Container>
-    <EditableGraph width={5000} height={5000} model={props.graph} />
+    <EditableGraph width={10000} height={10000} model={props.graph} />
   </Layout>
 );
 

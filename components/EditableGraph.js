@@ -35,6 +35,7 @@ export default class EditableGraph extends Component {
 
   componentDidMount() {
     this.Viewer.changeTool("auto");
+    this.Viewer.pan(-5000, -5000);
   }
 
   setDragMode(on = true) {
