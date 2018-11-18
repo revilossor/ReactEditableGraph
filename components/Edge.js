@@ -100,7 +100,7 @@ export default class Edge extends Component {
             width={0}
             height={0}
             startDrag={this.props.startDrag}
-            model={{ ...point, id: `${this.props.model.id}:::${i - 1}` }}
+            model={{ ...point, id: `${this.props.model.id}:::${i}` }}
           />
         ))}
       </g>

@@ -91,15 +91,21 @@ export default class EditableGraph extends Component {
         const edges = this.state.graph.edges;
         const bits = id.split(":::");
         const edge_id = bits[0];
-        const connection_id = bits[1];
+        const connection_id = parseInt(bits[1]);
         const edge = edges.find(edge => edge.id === edge_id);
-        edge.points[connection_id] = point;
-        this.setState({
-          graph: {
-            ...this.state.graph,
-            edges
-          }
-        });
+        if (connection_id === 0) {
+          console.log("moved start connection");
+        } else if (connection_id - 1 === edge.points.length) {
+          console.log("moved end connection");
+        } else {
+          edge.points[connection_id - 1] = point;
+          this.setState({
+            graph: {
+              ...this.state.graph,
+              edges
+            }
+          });
+        }
       } else {
         const nodes = this.state.graph.nodes;
         const node = nodes.find(node => node.id === id);
