@@ -69,6 +69,7 @@ export default class Node extends Component {
             y={this.state.node.y}
             key={i}
             index={i}
+            id={`${this.state.node.id}_in_${i}`}
             length={arr.length}
             isInPort="true"
           />
@@ -79,6 +80,7 @@ export default class Node extends Component {
             y={this.state.node.y}
             key={i}
             index={i}
+            id={`${this.state.node.id}_out_${i}`}
             length={arr.length}
             isInPort="false"
           />

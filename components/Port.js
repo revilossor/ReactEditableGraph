@@ -29,6 +29,7 @@ export default class Node extends Component {
       <circle
         cx={this.props.x + position.x}
         cy={this.props.y + position.y}
+        id={this.props.id}
         {...defaults}
       />
     );
