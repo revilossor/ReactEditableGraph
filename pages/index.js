@@ -22,11 +22,20 @@ const Index = props => (
 Index.getInitialProps = function() {
   return {
     graph: {
-      nodes: [{ id: "1", x: 100, y: 80 }, { id: "2", x: 400, y: 300 }],
+      nodes: [
+        { id: "1", x: 5100, y: 5080, ports: { in: [""], out: ["", ""] } },
+        { id: "2", x: 5400, y: 5300, ports: { in: [""], out: [""] } },
+        {
+          id: "3",
+          x: 5700,
+          y: 5700,
+          ports: { in: ["", "", ""], out: [""] }
+        }
+      ],
       edges: [
         {
-          start: { node: "1", port: "out_0", points: [{ x: 100, y: 100 }] },
-          end: { node: "2", port: "in_1", points: [{ x: 100, y: 120 }] }
+          start: { node: "1", port: "1_out_0", points: [{ x: 5100, y: 5100 }] },
+          end: { node: "2", port: "2_in_1", points: [{ x: 5100, y: 5120 }] }
         }
       ]
     }

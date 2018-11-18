@@ -1,13 +1,15 @@
 import { Component } from "react";
 
+import Port from "./Port";
+
 const defaults = {
   width: 100,
   height: 100,
   rx: 15,
   ry: 15,
-  fill: "#c1d37f",
-  stroke: "#b1c36f",
-  strokeWidth: 4
+  fill: "#4186d3",
+  stroke: "#04356c",
+  strokeWidth: 6
 };
 
 export default class Node extends Component {
@@ -34,31 +36,54 @@ export default class Node extends Component {
     if (this.state.dragging) {
       e.preventDefault();
       const coord = this.getMousePosition(e);
-      e.target.setAttributeNS(null, "x", coord.x - 50);
-      e.target.setAttributeNS(null, "y", coord.y - 50);
+      this.setState({
+        node: { ...this.state.node, x: coord.x - 50, y: coord.y - 50 }
+      });
     }
   }
 
   endDrag(e) {
     e.preventDefault();
     this.props.setDragMode.call(null);
-    this.setState({ dragging: false });
+    this.setState({
+      dragging: false
+    });
   }
 
   render() {
     return (
-      <svg>
+      <g>
         <rect
-          className="node"
-          {...defaults}
-          x={this.state.node.x + 5000}
-          y={this.state.node.y + 5000}
           onMouseDown={this.startDrag.bind(this)}
           onMouseMove={this.drag.bind(this)}
           onMouseUp={this.endDrag.bind(this)}
           onMouseLeave={this.endDrag.bind(this)}
+          x={this.state.node.x}
+          y={this.state.node.y}
+          className="node"
+          {...defaults}
         />
-      </svg>
+        {this.state.node.ports.in.map((port, i, arr) => (
+          <Port
+            x={this.state.node.x}
+            y={this.state.node.y}
+            key={i}
+            index={i}
+            length={arr.length}
+            isInPort="true"
+          />
+        ))}
+        {this.state.node.ports.out.map((port, i, arr) => (
+          <Port
+            x={this.state.node.x}
+            y={this.state.node.y}
+            key={i}
+            index={i}
+            length={arr.length}
+            isInPort="false"
+          />
+        ))}
+      </g>
     );
   }
 }
