@@ -108,6 +108,8 @@ export default class EditableGraph extends Component {
                   model={node}
                   key={i}
                   setDragMode={this.setDragMode.bind(this)}
+                  width={100}
+                  height={100}
                 />
               ))}
               {this.state.graph.edges.map((edge, i) => (

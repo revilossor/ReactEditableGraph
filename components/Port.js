@@ -7,7 +7,7 @@ const defaults = {
   strokeWidth: 5
 };
 
-export default class Node extends Component {
+export default class Port extends Component {
   state = {
     target: null
   };

@@ -30,7 +30,10 @@ export default class Draggable extends Component {
     if (this.state.dragging) {
       e.preventDefault();
       const coord = this.getMousePosition(e);
-      this.setState({ x: coord.x - 50, y: coord.y - 50 });
+      this.setState({
+        x: coord.x - this.props.width / 2,
+        y: coord.y - this.props.height / 2
+      });
     }
   }
 
@@ -43,22 +46,12 @@ export default class Draggable extends Component {
   }
 
   componentDidMount() {
-    ReactDOM.findDOMNode(this).addEventListener(
-      "mousedown",
-      this.startDrag.bind(this)
-    );
-    ReactDOM.findDOMNode(this).addEventListener(
-      "mousemove",
-      this.drag.bind(this)
-    );
-    ReactDOM.findDOMNode(this).addEventListener(
-      "mouseup",
-      this.endDrag.bind(this)
-    );
-    ReactDOM.findDOMNode(this).addEventListener(
-      "mouseleave",
-      this.endDrag.bind(this)
-    );
+    const thisNode = ReactDOM.findDOMNode(this);
+    thisNode.addEventListener("mousedown", this.startDrag.bind(this));
+    thisNode.addEventListener("mousemove", this.drag.bind(this));
+    thisNode.addEventListener("mouseup", this.endDrag.bind(this));
+    thisNode.addEventListener("mouseleave", this.endDrag.bind(this));
+    thisNode.classList.add("draggable");
   }
 
   componentWillUnmount() {

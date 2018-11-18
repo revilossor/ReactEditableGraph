@@ -8,8 +8,10 @@ import reset from "styled-reset";
 const GlobalStyle = createGlobalStyle`
   ${reset}
   @import url('https://fonts.googleapis.com/css?family=Bowlby+One+SC');
-  rect.node:hover {
+  .draggable:hover {
     cursor: move;
+  }
+  rect.node:hover {
     fill: #488dda;
   }
   circle.port:hover {

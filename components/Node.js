@@ -4,8 +4,6 @@ import Draggable from "./Draggable";
 import Port from "./Port";
 
 const defaults = {
-  width: 100,
-  height: 100,
   rx: 15,
   ry: 15,
   fill: "#4186d3",
@@ -14,10 +12,6 @@ const defaults = {
 };
 
 export default class Node extends Draggable {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <g>
@@ -26,6 +20,8 @@ export default class Node extends Draggable {
           y={this.state.y}
           id={this.props.model.id}
           className="node"
+          width={this.props.width}
+          height={this.props.height}
           {...defaults}
         />
         {this.props.model.ports.in.map((port, i, arr) => (
