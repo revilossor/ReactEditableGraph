@@ -14,11 +14,6 @@ const defaults = {
 };
 
 export default class Node extends Draggable {
-  constructor(props, context) {
-    super(props, context);
-    this.Viewer = null;
-  }
-
   state = {
     node: this.props.model
   };
@@ -29,6 +24,7 @@ export default class Node extends Draggable {
         <rect
           x={this.state.node.x}
           y={this.state.node.y}
+          id={this.state.node.id}
           className="node"
           {...defaults}
         />

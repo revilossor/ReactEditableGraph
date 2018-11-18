@@ -25,7 +25,7 @@ Index.getInitialProps = function() {
       nodes: [
         { id: "1", x: 5100, y: 5080, ports: { in: [""], out: ["", ""] } },
         { id: "2", x: 5400, y: 5300, ports: { in: [""], out: [""] } },
-        { id: "2", x: 5500, y: 5500, ports: { in: [""], out: [""] } },
+        { id: "2.5", x: 5500, y: 5500, ports: { in: [""], out: [""] } },
         {
           id: "3",
           x: 5700,
@@ -35,8 +35,9 @@ Index.getInitialProps = function() {
       ],
       edges: [
         {
-          start: { node: "1", port: "1_out_0", points: [{ x: 5100, y: 5100 }] },
-          end: { node: "2", port: "2_in_1", points: [{ x: 5100, y: 5120 }] }
+          start: "1_out_0",
+          end: "2_in_1",
+          points: [{ x: 5100, y: 5100 }]
         }
       ]
     }
