@@ -10,6 +10,10 @@ const defaults = {
 };
 
 export default class ControlPoint extends Draggable {
+  onDrag(e) {
+    this.props.onControlPointMoved(this.props.index, e);
+  }
+
   render() {
     return (
       <circle

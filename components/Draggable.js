@@ -30,12 +30,16 @@ export default class Draggable extends Component {
     if (this.state.dragging) {
       e.preventDefault();
       const coord = this.getMousePosition(e);
-      this.setState({
+      const point = {
         x: coord.x - this.props.width / 2,
         y: coord.y - this.props.height / 2
-      });
+      };
+      this.setState(point);
+      this.onDrag.call(this, point);
     }
   }
+
+  onDrag(drag) {}
 
   endDrag(e) {
     e.preventDefault();
