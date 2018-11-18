@@ -121,6 +121,47 @@ export default class EditableGraph extends Component {
     }
   }
 
+  addControlPoint(e, id) {
+    e.preventDefault();
+    const coord = this.getMousePosition(e);
+    const edges = this.state.graph.edges;
+    const edge = edges.find(edge => edge.id === id);
+    edge.points.push(coord);
+
+    // TODO work out where in list point goes based on proximity to other points.
+
+    edge.points.sort();
+    this.setState({
+      graph: {
+        ...this.state.graph,
+        edges
+      }
+    });
+  }
+
+  addRandomNode(e) {
+    e.preventDefault();
+    const coord = this.getMousePosition(e);
+    const newNode = {
+      id: `${this.state.graph.nodes.length}`,
+      x: coord.x - 50,
+      y: coord.y - 50,
+      ports: { in: [], out: [] }
+    };
+    for (let i = Math.round(Math.random() * 4); i > 0; --i) {
+      newNode.ports.in.push("");
+    }
+    for (let i = Math.round(Math.random() * 3); i > 0; --i) {
+      newNode.ports.out.push("");
+    }
+    this.setState({
+      graph: {
+        ...this.state.graph,
+        nodes: [...this.state.graph.nodes, newNode]
+      }
+    });
+  }
+
   render() {
     return (
       <Container>
@@ -133,7 +174,13 @@ export default class EditableGraph extends Component {
           customMiniature={Empty}
           customToolbar={Empty}
           detectAutoPan={false}
+          disableDoubleClickZoomWithToolAuto={true}
           onMouseMove={this.drag.bind(this)}
+          //onDoubleClick={this.addRandomNode.bind(this)}
+          onMouseOut={e => {
+            this.state.target = null;
+            this.Viewer.changeTool("auto");
+          }}
           onMouseUp={e => {
             this.state.target = null;
             this.Viewer.changeTool("auto");
@@ -154,6 +201,7 @@ export default class EditableGraph extends Component {
                 <Edge
                   model={edge}
                   key={i}
+                  onDoubleClick={this.addControlPoint.bind(this)}
                   startDrag={this.startDrag.bind(this)}
                   portPositions={this.getPortPositions.call(this)}
                 />

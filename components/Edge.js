@@ -92,7 +92,14 @@ export default class Edge extends Component {
 
     return (
       <g>
-        <path d={path} {...defaults} />
+        <path
+          onDoubleClick={e => {
+            this.props.onDoubleClick(e, this.props.model.id);
+          }}
+          className="edge"
+          d={path}
+          {...defaults}
+        />
         {points.map((point, i) => (
           <ControlPoint
             key={i}

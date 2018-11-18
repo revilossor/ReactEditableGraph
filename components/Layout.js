@@ -18,6 +18,9 @@ const GlobalStyle = createGlobalStyle`
     cursor: crosshair;
     fill: #4186d3;
   }
+  path.edge:hover {
+    cursor: crosshair;
+  }
 `;
 
 const Stage = styled.div`
