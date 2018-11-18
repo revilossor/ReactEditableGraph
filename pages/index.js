@@ -36,7 +36,7 @@ Index.getInitialProps = function() {
       edges: [
         {
           start: "1_out_0",
-          end: "2_in_1",
+          end: "2_in_0",
           points: [{ x: 5100, y: 5100 }]
         }
       ]

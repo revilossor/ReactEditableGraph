@@ -21,8 +21,7 @@ const Container = styled.div`
 
 export default class EditableGraph extends Component {
   state = {
-    graph: this.props.model,
-    portPositions: this.getPortPositions(this.props.model)
+    graph: this.props.model
   };
 
   componentDidMount() {
@@ -34,19 +33,20 @@ export default class EditableGraph extends Component {
     this.Viewer.changeTool(on ? "auto" : "none");
   }
 
-  getPortPositions(graph) {
+  getPortPositions() {
     const getPosition = (node, index, length, isInPort) => {
       const interval = 100 / length;
       return {
         x: node.x + (isInPort ? 0 : 100),
         y:
-          node.y + length === 1
+          node.y +
+          (length === 1
             ? interval / 2
-            : interval / 2 + interval * (index + 1) - interval
+            : interval / 2 + interval * (index + 1) - interval)
       };
     };
 
-    return graph.nodes.reduce((ports, node) => {
+    return this.state.graph.nodes.reduce((ports, node) => {
       node.ports.in.forEach((port, i) => {
         ports[`${node.id}_in_${i}`] = getPosition(
           node,
@@ -69,25 +69,19 @@ export default class EditableGraph extends Component {
 
   updateGraphState() {
     const nodes = Array.from(document.querySelectorAll("rect.node"));
-    this.setState(
-      {
-        graph: {
-          ...this.state.graph,
-          nodes: this.state.graph.nodes.map(node => {
-            const element = nodes.find(el => el.id === node.id);
-            return {
-              ...node,
-              x: element.x.baseVal.value,
-              y: element.y.baseVal.value
-            };
-          })
-        }
-      },
-      () => {
-        console.log("new graph state");
-        console.dir(this.state.graph);
+    this.setState({
+      graph: {
+        ...this.state.graph,
+        nodes: this.state.graph.nodes.map(node => {
+          const element = nodes.find(el => el.id === node.id);
+          return {
+            ...node,
+            x: element.x.baseVal.value,
+            y: element.y.baseVal.value
+          };
+        })
       }
-    );
+    });
   }
 
   render() {
@@ -121,6 +115,7 @@ export default class EditableGraph extends Component {
                   model={edge}
                   key={i}
                   setDragMode={this.setDragMode.bind(this)}
+                  portPositions={this.getPortPositions.call(this)}
                 />
               ))}
             </g>

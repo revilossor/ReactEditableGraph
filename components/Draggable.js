@@ -7,7 +7,9 @@ export default class Draggable extends Component {
   }
 
   state = {
-    dragging: false
+    dragging: false,
+    x: this.props.model.x,
+    y: this.props.model.y
   };
 
   getMousePosition(evt) {
@@ -28,9 +30,7 @@ export default class Draggable extends Component {
     if (this.state.dragging) {
       e.preventDefault();
       const coord = this.getMousePosition(e);
-      this.setState({
-        node: { ...this.state.node, x: coord.x - 50, y: coord.y - 50 }
-      });
+      this.setState({ x: coord.x - 50, y: coord.y - 50 });
     }
   }
 

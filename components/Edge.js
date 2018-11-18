@@ -11,25 +11,15 @@ const defaults = {
 };
 
 export default class Edge extends Component {
-  state = {
-    edge: this.props.model,
-    start: null,
-    end: null
-  };
-
-  componentDidMount() {
-    this.setState({
-      start: document.getElementById(this.state.edge.start),
-      end: document.getElementById(this.state.edge.end)
-    });
-  }
-
   render() {
+    const startPos = this.props.portPositions[this.props.model.start];
+    const endPos = this.props.portPositions[this.props.model.end];
+
     return (
       <g>
         <rect
-          //          x={this.state.start.cx.baseVal.value}
-          //          y={this.state.start.cy.baseVal.value}
+          x={this.props.portPositions[this.props.model.start].x}
+          y={this.props.portPositions[this.props.model.start].y}
           className="edge"
           {...defaults}
         />

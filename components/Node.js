@@ -14,38 +14,38 @@ const defaults = {
 };
 
 export default class Node extends Draggable {
-  state = {
-    node: this.props.model
-  };
+  constructor(props) {
+    super(props);
+  }
 
   render() {
     return (
       <g>
         <rect
-          x={this.state.node.x}
-          y={this.state.node.y}
-          id={this.state.node.id}
+          x={this.state.x}
+          y={this.state.y}
+          id={this.props.model.id}
           className="node"
           {...defaults}
         />
-        {this.state.node.ports.in.map((port, i, arr) => (
+        {this.props.model.ports.in.map((port, i, arr) => (
           <Port
-            x={this.state.node.x}
-            y={this.state.node.y}
+            x={this.state.x}
+            y={this.state.y}
             key={i}
             index={i}
-            id={`${this.state.node.id}_in_${i}`}
+            id={`${this.props.model.id}_in_${i}`}
             length={arr.length}
             isInPort="true"
           />
         ))}
-        {this.state.node.ports.out.map((port, i, arr) => (
+        {this.props.model.ports.out.map((port, i, arr) => (
           <Port
-            x={this.state.node.x}
-            y={this.state.node.y}
+            x={this.state.x}
+            y={this.state.y}
             key={i}
             index={i}
-            id={`${this.state.node.id}_out_${i}`}
+            id={`${this.props.model.id}_out_${i}`}
             length={arr.length}
             isInPort="false"
           />
