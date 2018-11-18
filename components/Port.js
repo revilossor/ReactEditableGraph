@@ -30,6 +30,7 @@ export default class Node extends Component {
         cx={this.props.x + position.x}
         cy={this.props.y + position.y}
         id={this.props.id}
+        className="port"
         {...defaults}
       />
     );

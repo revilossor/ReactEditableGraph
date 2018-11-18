@@ -25,6 +25,7 @@ Index.getInitialProps = function() {
       nodes: [
         { id: "1", x: 5100, y: 5080, ports: { in: [""], out: ["", ""] } },
         { id: "2", x: 5400, y: 5300, ports: { in: [""], out: [""] } },
+        { id: "2", x: 5500, y: 5500, ports: { in: [""], out: [""] } },
         {
           id: "3",
           x: 5700,
