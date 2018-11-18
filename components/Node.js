@@ -1,5 +1,6 @@
 import { Component } from "react";
 
+import Draggable from "./Draggable";
 import Port from "./Port";
 
 const defaults = {
@@ -12,52 +13,20 @@ const defaults = {
   strokeWidth: 6
 };
 
-export default class Node extends Component {
+export default class Node extends Draggable {
+  constructor(props, context) {
+    super(props, context);
+    this.Viewer = null;
+  }
+
   state = {
-    node: this.props.model,
-    dragging: false
+    node: this.props.model
   };
-
-  getMousePosition(evt) {
-    var CTM = event.target.getScreenCTM();
-    return {
-      x: (evt.clientX - CTM.e) / CTM.a,
-      y: (evt.clientY - CTM.f) / CTM.d
-    };
-  }
-
-  startDrag(e) {
-    e.preventDefault();
-    this.props.setDragMode.call(null, false);
-    this.setState({ dragging: true });
-  }
-
-  drag(e) {
-    if (this.state.dragging) {
-      e.preventDefault();
-      const coord = this.getMousePosition(e);
-      this.setState({
-        node: { ...this.state.node, x: coord.x - 50, y: coord.y - 50 }
-      });
-    }
-  }
-
-  endDrag(e) {
-    e.preventDefault();
-    this.props.setDragMode.call(null);
-    this.setState({
-      dragging: false
-    });
-  }
 
   render() {
     return (
       <g>
         <rect
-          onMouseDown={this.startDrag.bind(this)}
-          onMouseMove={this.drag.bind(this)}
-          onMouseUp={this.endDrag.bind(this)}
-          onMouseLeave={this.endDrag.bind(this)}
           x={this.state.node.x}
           y={this.state.node.y}
           className="node"

@@ -1,8 +1,9 @@
-import { createRef, Component, Fragment } from "react";
+import { Component } from "react";
 import styled from "styled-components";
 
 import { ReactSVGPanZoom } from "react-svg-pan-zoom";
-import Node from "../components/Node";
+import Node from "./Node";
+import Empty from "./Empty";
 
 const Container = styled.div`
   overflow: auto;
@@ -16,19 +17,7 @@ const Container = styled.div`
   }
 `;
 
-class EmptyComponent extends Component {
-  onChangeValue() {}
-  render() {
-    return <Fragment />;
-  }
-}
-
 export default class EditableGraph extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.Viewer = null;
-  }
-
   state = {
     graph: this.props.model
   };
@@ -51,8 +40,8 @@ export default class EditableGraph extends Component {
           height={this.props.height}
           background="#f0e2a3"
           SVGBackground="#f0e2a3"
-          customMiniature={EmptyComponent}
-          customToolbar={EmptyComponent}
+          customMiniature={Empty}
+          customToolbar={Empty}
           detectAutoPan={false}
           onMouseUp={e => {
             this.setDragMode.call(this);
