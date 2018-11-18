@@ -16,8 +16,8 @@ export default class Node extends Draggable {
     return (
       <g>
         <rect
-          x={this.state.x}
-          y={this.state.y}
+          x={this.props.model.x}
+          y={this.props.model.y}
           id={this.props.model.id}
           className="node"
           width={this.props.width}
@@ -26,8 +26,8 @@ export default class Node extends Draggable {
         />
         {this.props.model.ports.in.map((port, i, arr) => (
           <Port
-            x={this.state.x}
-            y={this.state.y}
+            x={this.props.model.x}
+            y={this.props.model.y}
             key={i}
             index={i}
             id={`${this.props.model.id}_in_${i}`}
@@ -37,8 +37,8 @@ export default class Node extends Draggable {
         ))}
         {this.props.model.ports.out.map((port, i, arr) => (
           <Port
-            x={this.state.x}
-            y={this.state.y}
+            x={this.props.model.x}
+            y={this.props.model.y}
             key={i}
             index={i}
             id={`${this.props.model.id}_out_${i}`}

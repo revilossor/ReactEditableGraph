@@ -21,16 +21,13 @@ const Container = styled.div`
 
 export default class EditableGraph extends Component {
   state = {
-    graph: this.props.model
+    graph: this.props.model,
+    target: null
   };
 
   componentDidMount() {
     this.Viewer.changeTool("auto");
     this.Viewer.pan(-5000, -5000);
-  }
-
-  setDragMode(on = true) {
-    this.Viewer.changeTool(on ? "auto" : "none");
   }
 
   getPortPositions() {
@@ -67,21 +64,55 @@ export default class EditableGraph extends Component {
     }, {});
   }
 
-  updateGraphState() {
-    const nodes = Array.from(document.querySelectorAll("rect.node"));
-    this.setState({
-      graph: {
-        ...this.state.graph,
-        nodes: this.state.graph.nodes.map(node => {
-          const element = nodes.find(el => el.id === node.id);
-          return {
-            ...node,
-            x: element.x.baseVal.value,
-            y: element.y.baseVal.value
-          };
-        })
+  getMousePosition(e) {
+    var CTM = event.target.getScreenCTM();
+    return {
+      x: (event.clientX - CTM.e) / CTM.a,
+      y: (event.clientY - CTM.f) / CTM.d
+    };
+  }
+
+  startDrag(target) {
+    this.Viewer.changeTool("none");
+    this.setState({ target });
+  }
+
+  drag(e) {
+    if (this.state.target) {
+      e.preventDefault();
+      const coord = this.getMousePosition(e);
+
+      const point = {
+        x: coord.x - this.state.target.props.width / 2,
+        y: coord.y - this.state.target.props.height / 2
+      };
+      const id = this.state.target.props.model.id;
+      if (id.includes(":::")) {
+        const edges = this.state.graph.edges;
+        const bits = id.split(":::");
+        const edge_id = bits[0];
+        const connection_id = bits[1];
+        const edge = edges.find(edge => edge.id === edge_id);
+        edge.points[connection_id] = point;
+        this.setState({
+          graph: {
+            ...this.state.graph,
+            edges
+          }
+        });
+      } else {
+        const nodes = this.state.graph.nodes;
+        const node = nodes.find(node => node.id === id);
+        node.x = point.x;
+        node.y = point.y;
+        this.setState({
+          graph: {
+            ...this.state.graph,
+            nodes
+          }
+        });
       }
-    });
+    }
   }
 
   render() {
@@ -96,9 +127,10 @@ export default class EditableGraph extends Component {
           customMiniature={Empty}
           customToolbar={Empty}
           detectAutoPan={false}
+          onMouseMove={this.drag.bind(this)}
           onMouseUp={e => {
-            this.setDragMode.call(this);
-            this.updateGraphState.call(this);
+            this.state.target = null;
+            this.Viewer.changeTool("auto");
           }}
         >
           <svg width={this.props.width} height={this.props.height}>
@@ -107,7 +139,7 @@ export default class EditableGraph extends Component {
                 <Node
                   model={node}
                   key={i}
-                  setDragMode={this.setDragMode.bind(this)}
+                  startDrag={this.startDrag.bind(this)}
                   width={100}
                   height={100}
                 />
@@ -116,7 +148,7 @@ export default class EditableGraph extends Component {
                 <Edge
                   model={edge}
                   key={i}
-                  setDragMode={this.setDragMode.bind(this)}
+                  startDrag={this.startDrag.bind(this)}
                   portPositions={this.getPortPositions.call(this)}
                 />
               ))}

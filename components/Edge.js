@@ -9,27 +9,6 @@ const defaults = {
 };
 
 export default class Edge extends Component {
-  state = {
-    points: [
-      this.props.portPositions[this.props.model.start],
-      ...this.props.model.points,
-      this.props.portPositions[this.props.model.end]
-    ]
-  };
-
-  onControlPointMoved(index, point) {
-    if (index === 0) {
-      console.log("detach start");
-    } else if (index === this.state.points.length - 1) {
-      console.log("detach end");
-    }
-    const points = this.state.points;
-    points[index] = point;
-    this.setState({
-      points
-    });
-  }
-
   path(points) {
     return points.reduce(
       (str, point, i) =>
@@ -89,34 +68,39 @@ export default class Edge extends Component {
   }
 
   render() {
-    const x = this.state.points.map(point => point.x);
-    const y = this.state.points.map(point => point.y);
+    const points = [
+      this.props.portPositions[this.props.model.start],
+      ...this.props.model.points,
+      this.props.portPositions[this.props.model.end]
+    ];
+
+    const x = points.map(point => point.x);
+    const y = points.map(point => point.y);
 
     const px = this.computeControlPoints(x);
     const py = this.computeControlPoints(y);
 
-    const points = this.state.points.reduce((points, point, i, a) => {
-      points.push([point.x, point.y]);
+    const controlPoints = points.reduce((cps, point, i, a) => {
+      cps.push([point.x, point.y]);
       if (i < a.length - 1) {
-        points.push([px.p1[i], py.p1[i]], [px.p2[i], py.p2[i]]);
+        cps.push([px.p1[i], py.p1[i]], [px.p2[i], py.p2[i]]);
       }
-      return points;
+      return cps;
     }, []);
 
-    const path = this.path(points);
+    const path = this.path(controlPoints);
 
     return (
       <g>
         <path d={path} {...defaults} />
-        {this.state.points.map((point, i) => (
+        {points.map((point, i) => (
           <ControlPoint
             key={i}
             index={i}
             width={0}
             height={0}
-            setDragMode={this.props.setDragMode}
-            model={point}
-            onControlPointMoved={this.onControlPointMoved.bind(this)}
+            startDrag={this.props.startDrag}
+            model={{ ...point, id: `${this.props.model.id}:::${i - 1}` }}
           />
         ))}
       </g>
